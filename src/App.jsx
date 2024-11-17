@@ -1,12 +1,13 @@
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import Weather from './Components/Weather';
+import Header from './Components/Header';
+
 
 
 function App() {
   return(
     <>
-    <Weather />
+    <Header />
     </>
   )
 }
