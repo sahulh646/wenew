@@ -2,6 +2,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Current from './Current'
+import Forecast from './Forecast';
 
 function Weather() {
     const [city, setCity] = useState();
@@ -12,7 +13,7 @@ function Weather() {
   
     const autoComURL = `https://api.weatherapi.com/v1/search.json?key=91540b4f395c43c4a2924409240711&q=`;
   
-    const weatherURL = (city) => `https://api.weatherapi.com/v1/forecast.json?key=91540b4f395c43c4a2924409240711&q=${city}&days=7&aqi=no&alerts=no`;
+    const weatherURL = (city) => `https://api.weatherapi.com/v1/forecast.json?key=91540b4f395c43c4a2924409240711&q=${city}&days=3&aqi=no&alerts=no`;
   
     useEffect(() => {
       if (city && city.length > 3) {
@@ -55,7 +56,18 @@ function Weather() {
     return (
       <>
         <div className="container bg-primary p-5 rounded mt-5">
-          <input type="text" placeholder='Enter City Name' className='form-control' onChange={(e) => { setCity(e.target.value) }} />
+          <input 
+          type="text" 
+          placeholder='Enter City Name' 
+          className='form-control' 
+          onChange={(e) => { 
+            setCity(e.target.value);
+            if(e.target.value===""){
+              setCurrent();
+              setForecast();
+              setLocation();
+            }
+            }} />
           {citySuggest && citySuggest.map((city) => {
             return <div className='text-center bg-info p-1 bg-opacity-10 text-light border border-info 
             border-opacity-25 rounded' 
@@ -63,6 +75,7 @@ function Weather() {
             onClick={() => handleSelectedCity(city)}>{city}</div>
           })}
           {current && <Current current = {current} location = {location} />}
+          {forecast && <Forecast forecast = {forecast} location = {location} />}
         </div>
       </>
     )
